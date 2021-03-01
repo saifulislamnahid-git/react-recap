@@ -1,20 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
-  const nayoks = [
-    {name: 'Jasim', year: 2}, 
-    {name:'Shakib khan', year: 1}, 
-    {name: 'Dibjol', year: 3}
-  ]
+  const [nayoks, setNayoks] = useState([]);
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res => res.json())
+    .then(data => setNayoks(data))
+  }, [])
+
+  // const nayoks = [
+  //   {name: 'Jasim', year: 2}, 
+  //   {name:'Shakib khan', year: 1}, 
+  //   {name: 'Dibjol', year: 3}
+  // ]
   return (
     <div className="App">
       {
-        nayoks.map(nk => <Nayok name={nk.name} year={nk.year}></Nayok>)
+        nayoks.map(nk => <Nayok name={nk.name} key={nk.id} username={nk.username}></Nayok>)
       }
       <MovieCounter></MovieCounter>
-      
+
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         
@@ -43,8 +50,8 @@ function Nayok(props) {
   }
   return (
     <div style={nayokStyle}>
-      <h1>Ami {props.name}</h1>
-      <h3>I have started learning React JS last {props.year} year</h3>
+      <h1>আমি {props.name}</h1>
+      <h3>আমার ইউজারনেম হচ্ছে {props.username}</h3>
     </div>
   )
 }
