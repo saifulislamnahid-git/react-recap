@@ -3,14 +3,18 @@ import './App.css';
 import { useState } from 'react';
 
 function App() {
-  const nayoks = ['Jasim', 'Shakib khan', 'Dibjol']
+  const nayoks = [
+    {name: 'Jasim', year: 2}, 
+    {name:'Shakib khan', year: 1}, 
+    {name: 'Dibjol', year: 3}
+  ]
   return (
     <div className="App">
+      {
+        nayoks.map(nk => <Nayok name={nk.name} year={nk.year}></Nayok>)
+      }
       <MovieCounter></MovieCounter>
-    <Nayok name={nayoks[0]}></Nayok>
-    <Nayok name="Shakil"></Nayok>
-    <Nayok name={nayoks[1]}></Nayok>
-    <Nayok></Nayok>
+      
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         
@@ -22,12 +26,12 @@ function App() {
 }
 
 function MovieCounter() {
-  const [count, setCount] = useState(0);
-  console.log(count);
+  const [count, setCount] = useState(1);
+  const movieCountHandle = () => setCount(count+1);
   return (
     <div>
-      <button>Add Movie</button>
-      <h3>Number of movies: </h3>
+      <button onClick={movieCountHandle}>Add Movie</button>
+      <h3>Number of movies: {count}</h3>
     </div>
   )
 }
@@ -40,7 +44,7 @@ function Nayok(props) {
   return (
     <div style={nayokStyle}>
       <h1>Ami {props.name}</h1>
-      <h3>I have started learning React JS</h3>
+      <h3>I have started learning React JS last {props.year} year</h3>
     </div>
   )
 }
